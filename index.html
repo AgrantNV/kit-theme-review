@@ -117,7 +117,7 @@
 <body>
 
 <header>
-  <h1>\U0001f3a8 Kit Theme Review</h1>
+  <h1>🎨 Kit Theme Review</h1>
   <p>Dark / Light comparison &mdash; <code>feature/unified-stylesheet</code></p>
   <p>Updated: 2026-04-17 22:21 UTC &bull; Commit: d4017f0bc2</p>
 </header>
@@ -127,7 +127,7 @@
 <div class="controls">
   <button onclick="setMode('side')" id="btn-side" class="active">Side by Side</button>
   <button onclick="setMode('slider')" id="btn-slider">Slider</button>
-  <button onclick="toggleAll('approve')" id="btn-all-approve">\u2705 Approve All</button>
+  <button onclick="toggleAll('approve')" id="btn-all-approve">✅ Approve All</button>
 </div>
 
 <div class="full-view">
@@ -148,9 +148,9 @@
 <div class="windows-grid" id="grid"></div>
 
 <div class="summary" id="summary-section" style="display:none">
-  <h2>\U0001f4cb Review Summary</h2>
+  <h2>📋 Review Summary</h2>
   <pre id="summary-text"></pre>
-  <button class="export-btn" onclick="copyFeedback()">\U0001f4cb Copy to Clipboard</button>
+  <button class="export-btn" onclick="copyFeedback()">📋 Copy to Clipboard</button>
 </div>
 
 <div class="lightbox" id="lightbox" onclick="closeLightbox()">
@@ -192,17 +192,17 @@ function renderCards() {
     card.className = "window-card" + (reviews[i] === "approve" ? " approved" : reviews[i] === "flag" ? " needs-work" : "");
     card.id = "card-" + i;
     
-    const status = reviews[i] === "approve" ? " \u2705" : reviews[i] === "flag" ? " \u26a0\ufe0f" : "";
+    const status = reviews[i] === "approve" ? " ✅" : reviews[i] === "flag" ? " ⚠️" : "";
     
     card.innerHTML = `
       <div class="card-header">
         <h3>${win.title}${status}</h3>
-        <span class="dims">${win.w} \u00d7 ${win.h}</span>
+        <span class="dims">${win.w} × ${win.h}</span>
       </div>
       <div class="card-images" id="images-${i}"></div>
       <div class="card-actions">
-        <button class="btn-approve ${reviews[i]==='approve'?'active':''}" onclick="review(${i},'approve')">\u2705 Approve</button>
-        <button class="btn-flag ${reviews[i]==='flag'?'active':''}" onclick="review(${i},'flag')">\U0001f6a9 Needs Work</button>
+        <button class="btn-approve ${reviews[i]==='approve'?'active':''}" onclick="review(${i},'approve')">✅ Approve</button>
+        <button class="btn-flag ${reviews[i]==='flag'?'active':''}" onclick="review(${i},'flag')">🚩 Needs Work</button>
         <input class="feedback-input ${reviews[i]==='flag'?'visible':''}" 
                id="feedback-${i}" 
                placeholder="What needs fixing?"
@@ -300,14 +300,14 @@ function updateSummary() {
   const section = document.getElementById("summary-section");
   const hasReviews = MANIFEST.some((_, i) => reviews[i]);
   section.style.display = hasReviews ? "block" : "none";
-  let text = "Kit Theme Review \u2014 " + new Date().toISOString() + "\nCommit: " + COMMIT + "\n\n";
+  let text = "Kit Theme Review — " + new Date().toISOString() + "\nCommit: " + COMMIT + "\n\n";
   const approved = [], flagged = [];
   MANIFEST.forEach((win, i) => {
     if (reviews[i] === "approve") approved.push(win.title);
     if (reviews[i] === "flag") flagged.push(win.title + ": " + (reviews[i + "_note"] || "(no details)"));
   });
-  if (approved.length) text += "\u2705 Approved (" + approved.length + "):\n" + approved.map(t => "  - " + t).join("\n") + "\n\n";
-  if (flagged.length) text += "\U0001f6a9 Needs Work (" + flagged.length + "):\n" + flagged.map(t => "  - " + t).join("\n") + "\n";
+  if (approved.length) text += "✅ Approved (" + approved.length + "):\n" + approved.map(t => "  - " + t).join("\n") + "\n\n";
+  if (flagged.length) text += "🚩 Needs Work (" + flagged.length + "):\n" + flagged.map(t => "  - " + t).join("\n") + "\n";
   document.getElementById("summary-text").textContent = text;
 }
 
@@ -315,14 +315,14 @@ function copyFeedback() {
   const text = document.getElementById("summary-text").textContent;
   navigator.clipboard.writeText(text).then(() => {
     const btn = document.querySelector(".export-btn");
-    btn.textContent = "\u2705 Copied!";
-    setTimeout(() => btn.textContent = "\U0001f4cb Copy to Clipboard", 2000);
+    btn.textContent = "✅ Copied!";
+    setTimeout(() => btn.textContent = "📋 Copy to Clipboard", 2000);
   });
 }
 
 function openLB(i, mode) {
   const win = MANIFEST[i];
-  document.getElementById('lb-label').textContent = win.title + ' \u2014 ' + (mode === 'dark' ? 'Dark' : 'Light');
+  document.getElementById('lb-label').textContent = win.title + ' — ' + (mode === 'dark' ? 'Dark' : 'Light');
   document.getElementById('lb-img').src = win[mode];
   document.getElementById('lightbox').classList.add('open');
   document.body.style.overflow = 'hidden';
