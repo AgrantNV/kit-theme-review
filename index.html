@@ -217,12 +217,12 @@ function renderCards() {
     if (viewMode === "side") {
       imgContainer.innerHTML = `
         <div class="img-side">
-          <img src="${win.dark}" alt="Dark" onclick="openLightbox('${win.title} — Dark', '${win.dark}')">
+          <img src="${win.dark}" alt="Dark" onclick="openLB(${i},'dark')">
           <span class="label-tag tag-dark">Dark</span>
         </div>
         <div class="divider"></div>
         <div class="img-side">
-          <img src="${win.light}" alt="Light" onclick="openLightbox('${win.title} — Light', '${win.light}')">
+          <img src="${win.light}" alt="Light" onclick="openLB(${i},'light')">
           <span class="label-tag tag-light">Light</span>
         </div>
       `;
@@ -320,9 +320,10 @@ function copyFeedback() {
   });
 }
 
-function openLightbox(label, src) {
-  document.getElementById('lb-label').textContent = label;
-  document.getElementById('lb-img').src = src;
+function openLB(i, mode) {
+  const win = MANIFEST[i];
+  document.getElementById('lb-label').textContent = win.title + ' \u2014 ' + (mode === 'dark' ? 'Dark' : 'Light');
+  document.getElementById('lb-img').src = win[mode];
   document.getElementById('lightbox').classList.add('open');
   document.body.style.overflow = 'hidden';
 }
